@@ -1,0 +1,20 @@
+addons:
+  postgresql: 9.5
+after_success:
+- bundle exec codeclimate-test-reporter
+before_script:
+- cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
+dist: trusty
+language: ruby
+rvm:
+- 2.5.0
+script:
+- bundle exec rails db:migrate RAILS_ENV=test
+- bundle exec rspec
+deploy:
+  provider: heroku
+  api_key:
+    secure: 2bEM2VqgaPjwqKN2uN8Q0VPcStGOOshhoMTmolvZgT95dL1beTZO3NEYWBHWfYoGQs2jv/C4Ek9uOpZRi95Lv7ki6dA1EfVScK6jq4Bfxibwt9xBijxpYVo2VzYLen/39KEDbMGZN9mN4X/J0fDUc0WK0clCXcp7hOGGTZ4NH8nr4qzDOnlih6LB8OFnmInIsMeOvoxdQuolxktFRq2/L9X/cLOtVZQtgkm8LS8dScow1AkoNxWk4gAdeeXgl0hZFYCHz1nr8C1dsuYoGE3EVQ4dbvtagTK8/pbKiEGu8XpKnttV2VM2VjZ2WapAkOY5GaUFCIdJrGcfYfVGyT7QJ1kUGvPLXNvEmBQ1n8musQDsxrWPo9LjJVhX/ISKK2ee0Y1cwg0GOEc3BNvne/xkf9eh86wmmUTuem71fLf0pTG3eXfBry4vrnySqtdHsUQKs3U1YmgWBVU0GPIOiYbGOvqBLNwX4ZHGedvGKAmjI/IBvG03dgjQhz8cYHwoLP2WxzhRkhOtkBNViT1cgnJjdqmIJbDXghIbhgV0egfcS0+J+7OpzDsorlAVxDZHsym9ZlHWGefAe5y3jL5jMz3SpaDHgZcEXJqNE1UfYHB3hOsPjo/bCFExlo1kytZ/++ZJDS/Y0BEIOH0Xz68XUYyTFW55wYWVJyw9qtVwNvDYTAw=
+  app:
+    master: "travistestdemo"
