@@ -5,9 +5,9 @@ after_success:
 before_script:
 - cp config/database.yml.travis config/database.yml
 - psql -c 'create database travis_demo_development_test;' -U postgres
- dist: trusty
- language: ruby
- rvm:
+dist: trusty
+language: ruby
+rvm:
  - 2.5.0
 script:
 - bundle exec rails db:migrate
