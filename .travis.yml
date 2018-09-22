@@ -4,7 +4,7 @@ after_success:
 - bundle exec codeclimate-test-reporter
 before_script:
 - cp config/database.yml.travis config/database.yml
-- psql -c 'create database travis_demo_test;' -U gaurav
+- psql -c 'create database travis_ci_test;' -U postgres
 dist: trusty
 language: ruby
 rvm:
